@@ -1,14 +1,14 @@
 const newGame = document.querySelector('#new-game');
 const game = document.querySelector('#game');
-const score = document.querySelector('#score-number');
+const scoreDisplay = document.querySelector('#score-number');
 const btnUp = document.querySelector('#up');
 const btnDown = document.querySelector('#down');
 const btnLeft = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 
-
+let score = 0
 let grid = [["","","",""],["","","",""],["","","",""],["","","",""]]
-// const grid = [[2,4,"",8],[2,4,16,""],["",4,"",8],[2,"","",""]]
+// let grid = [[2,"","",""],[2,"","",""],[4,"","",""],[4,"","",""]]
 
 
 // Function to return a random number between 0 and 3
@@ -18,7 +18,7 @@ const randomNum = () => {
   return number
 }
 
-
+// Function to add a square to the grid
 const addSquare = () => {
   let row = randomNum();
   let col = randomNum();
@@ -45,23 +45,21 @@ const resetGrid = () => {
       cell.innerText = "";
     }
   }
+
+  // Reset the score
+  score = 0;
+  scoreDisplay.innerText = score;
 }
 
-newGame.addEventListener('click', () => {
-  console.log("-----------------------")
-  console.log("New Game");
-  // reset
-  resetGrid()
+// Function to update the score
+const updateScore = (scoreToAdd) => {
+  score += scoreToAdd;
+  scoreDisplay.innerText = score; 
+}
 
-  // Add first square
-  addSquare();
-  console.log("Grid >>", grid)
-});
-
-btnDown.addEventListener('click', () => {
-  console.log("bas")
-  
-  // #1 - Move the squares down
+// Function to move the squares down to clear the spaces
+const moveDownClearSpaces = () => {
+  console.log("Move Down")
   for (let j = 0 ; j < 4; j++) {
     // Check if the column is empty
     let empty = true;
@@ -105,13 +103,54 @@ btnDown.addEventListener('click', () => {
       }
     }
   }
+}
+
+const moveDown = () => {
+  // #1 - Move the squares down
+  moveDownClearSpaces();
 
   // #2 - Merge the squares
-
+  for (let j = 0; j < 4; j++) {
+    for (let i = 3; i > 0; i--) {
+      if (grid[i][j] === grid[i-1][j] && grid[i][j] !== "") {
+        grid[i][j] = grid[i][j] * 2;
+        grid[i-1][j] = "";
+        // Update the screen
+        cell = document.querySelector(`#cell-${i}-${j}`);
+        cell.innerText = grid[i][j];
+        cell = document.querySelector(`#cell-${i-1}-${j}`);
+        cell.innerText = "";
+        // Update the score
+        updateScore(grid[i][j]);
+      }
+    }
+  }
 
   // #3 - Move the squares down
-
+  moveDownClearSpaces();
 
   // #4 - Add a new square
-  // addSquare()
+  addSquare()
+}
+
+newGame.addEventListener('click', () => {
+  console.log("-----------------------")
+  console.log("New Game");
+  // reset
+  resetGrid()
+
+  // Add first square
+  addSquare();
+  console.log("Grid >>", grid)
+});
+
+// Move Down when the down button is clicked
+btnDown.addEventListener('click', () => {
+  moveDown();
+})
+// Move Down when the down arrow key is pressed
+document.addEventListener('keydown', (event) => {
+  if (event.key === "ArrowDown") {
+    moveDown();
+  }
 })
