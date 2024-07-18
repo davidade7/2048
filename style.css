@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+  /* font-family: 'Courier New', Courier, monospace; */
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 #app {
   width: 400px;
   border: 1px solid black;
@@ -7,19 +13,24 @@
 
 #game {
   border: 1px solid black;
-  
 }
+
 .row {
   display: flex;
 }
+
 .cell {
   width: 75px;
   height: 75px;
-  border: 1px solid blue;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 5px;
+  margin: 2px;
+
+  background-color: rgb(190, 190, 190);
+  border: 1px solid rgb(140, 140, 140);
   font-size: 2rem;
 }
 
@@ -27,4 +38,52 @@
   display: flex;
   justify-content: space-around;
   margin-top: 10px;
+}
+
+.v-2 {
+  background-color: rgb(192, 115, 80);
+}
+
+.v-4 {
+  background-color: rgb(162, 128, 60);
+}
+
+.v-8 {
+  background-color: rgb(124, 137, 62);
+}
+
+.v-16 {
+  background-color: rgb(84, 143, 84);
+}
+
+.v-32 {
+  background-color: rgb(35, 144, 115);
+}
+
+.v-64 {
+  background-color: rgb(0, 141, 146);
+}
+
+.v-128 {
+  background-color: rgb(23, 135, 168);
+}
+
+.v-256 {
+  background-color: rgb(80, 125, 176);
+}
+
+.v-512 {
+  background-color: rgb(119, 114, 168);
+}
+
+.v-1024 {
+  background-color: rgb(145, 103, 148);
+}
+
+.v-2048 {
+  background-color: rgb(156, 97, 122);
+}
+
+.v-5096 {
+  background-color: rgb(154, 97, 97);
 }

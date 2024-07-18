@@ -69,6 +69,21 @@ const compareArrays = (array1, array2) => {
   return true
 }
 
+// Update style of the squares
+const updateCellStyles = () => {
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      let cell = document.querySelector(`#cell-${i}-${j}`);
+      let value = grid[i][j];
+      cell.className = 'cell'; // Réinitialiser la classe
+      if (value !== "") {
+        cell.classList.add(`v-${value}`);
+      }
+    }
+  }
+}
+
+
 // Function to move the squares down to clear the spaces
 const moveDownClearSpaces = () => {
   console.log("Move Down")
@@ -115,6 +130,7 @@ const moveDownClearSpaces = () => {
       }
     }
   }
+  updateCellStyles();
 }
 
 // Function to move the squares up to clear the spaces
@@ -163,6 +179,7 @@ const moveUpClearSpaces = () => {
       }
     }
   }
+  updateCellStyles();
 }
 
 // Function to move the squares right to clear the spaces
@@ -211,6 +228,7 @@ const moveRightClearSpaces = () => {
       }
     }
   }
+  updateCellStyles();
 }
 
 // Function to move the squares left to clear the spaces
@@ -259,6 +277,7 @@ const moveLeftClearSpaces = () => {
       }
     }
   }
+  updateCellStyles();
 }
 
 // Function for DOWN movement
@@ -294,6 +313,7 @@ const moveDown = () => {
     messageDisplay.innerText = "Down movement not possible"
   } else {
     addSquare()
+    updateCellStyles();
     messageDisplay.innerText = ""
   }
 }
@@ -331,6 +351,7 @@ const moveUp = () => {
     messageDisplay.innerText = "Up movement not possible"
   } else {
     addSquare()
+    updateCellStyles();
     messageDisplay.innerText = ""
   }
 }
@@ -368,6 +389,7 @@ const moveRight = () => {
     messageDisplay.innerText = "Right movement not possible"
   } else {
     addSquare()
+    updateCellStyles();
     messageDisplay.innerText = ""
   }
 }
@@ -405,6 +427,7 @@ const moveLeft = () => {
     messageDisplay.innerText = "Left movement not possible"
   } else {
     addSquare()
+    updateCellStyles();
     messageDisplay.innerText = ""
   }
 }
@@ -419,6 +442,7 @@ newGame.addEventListener('click', () => {
 
   // Add first square
   addSquare();
+  updateCellStyles();
   console.log("Grid >>", grid)
 });
 
