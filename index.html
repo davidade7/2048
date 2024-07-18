@@ -9,8 +9,11 @@
 <body>
   <div id="app">
     <h1 id="title">2048</h1>
-    <div id="score">Score : <span id="score-number">0</span></div>
-    <button id="new-game">New Game</button>
+    <div id="reset-btn">
+      <button id="new-game">New Game</button>
+    </div>
+    <div id="score">Score :<span id="score-number">0</span></div>
+    
     
     <div id="game">
       <div class="row">
@@ -40,14 +43,29 @@
     </div>
 
     <div id="commands">
-      <button id="up">Up</button>
-      <button id="down">Down</button>
-      <button id="left">Left</button>
-      <button id="right">Right</button>
+      <button id="up">
+        <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"></path>
+        </svg>
+      </button>
+      <button id="down">
+        <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"></path>
+        </svg>
+      </button>
+      <button id="left">
+        <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path>
+        </svg>
+      </button>
+      <button id="right">
+        <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
+        </svg>
+      </button>
     </div>
 
     <div id="message-display">
-
     </div>
 
   </div>

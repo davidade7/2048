@@ -49,6 +49,9 @@ const resetGrid = () => {
   // Reset the score
   score = 0;
   scoreDisplay.innerText = score;
+
+  // Reset the message
+  messageDisplay.innerText = "";
 }
 
 // Function to update the score
