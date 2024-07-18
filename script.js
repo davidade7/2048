@@ -1,6 +1,7 @@
 const newGame = document.querySelector('#new-game');
 const game = document.querySelector('#game');
 const scoreDisplay = document.querySelector('#score-number');
+const messageDisplay = document.querySelector('#message-display');
 const btnUp = document.querySelector('#up');
 const btnDown = document.querySelector('#down');
 const btnLeft = document.querySelector('#left');
@@ -14,7 +15,7 @@ let grid = [["","","",""],["","","",""],["","","",""],["","","",""]]
 // Function to return a random number between 0 and 3
 const randomNum = () => {
   const number = Math.floor(Math.random() * 4);
-  console.log("Random Number >>", number);
+  // console.log("Random Number >>", number);
   return number
 }
 
@@ -55,6 +56,18 @@ const resetGrid = () => {
 const updateScore = (scoreToAdd) => {
   score += scoreToAdd;
   scoreDisplay.innerText = score; 
+}
+
+// Function to compare two 2D arrays
+const compareArrays = (array1, array2) => {
+  for (let i = 0; i < array1.length; i++) {
+    for (let j = 0; j < array1[i].length; j++) {
+      if (array1[i][j] !== array2[i][j]) {
+        return false;
+      }
+    }
+  }
+  return true
 }
 
 // Function to move the squares down to clear the spaces
@@ -106,6 +119,9 @@ const moveDownClearSpaces = () => {
 }
 
 const moveDown = () => {
+  let tempGrid = JSON.parse(JSON.stringify(grid))
+  console.log("tempGrid >>", tempGrid)
+  
   // #1 - Move the squares down
   moveDownClearSpaces();
 
@@ -129,8 +145,15 @@ const moveDown = () => {
   // #3 - Move the squares down
   moveDownClearSpaces();
 
-  // #4 - Add a new square
-  addSquare()
+  // #4 - Add a new square only if the grid has changed
+  console.log("check >>", compareArrays(grid, tempGrid))
+  if (compareArrays(grid, tempGrid)) {
+    console.log("Down movement not possible")
+    messageDisplay.innerText = "Down movement not possible"
+  } else {
+    addSquare()
+    messageDisplay.innerText = ""
+  }
 }
 
 newGame.addEventListener('click', () => {
