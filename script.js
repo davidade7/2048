@@ -118,9 +118,57 @@ const moveDownClearSpaces = () => {
   }
 }
 
+// Function to move the squares up to clear the spaces
+const moveUpClearSpaces = () => {
+  console.log("Move Up")
+  for (let j = 0 ; j < 4; j++) {
+    // Check if the column is empty
+    let empty = true;
+    for (let i = 0; i < 4; i++) {
+      if (grid[i][j] !== "") {
+        empty = false;
+      }
+    }
+    // Switch to the next column if the current one is empty
+    if (empty) {
+      continue;
+    }
+    
+    // Begin the movement
+    for (let i = 0; i < 4; i++) {
+      // Check if the cell is empty
+      if (grid[i][j] === "") {
+
+        // Check the cells below
+        for (let k = i + 1; k < 4; k++) {
+          if (grid[k][j] !== "") {
+            // Swap the cells
+            grid[i][j] = grid[k][j];
+            grid[k][j] = "";
+            // Update the screen
+            cell = document.querySelector(`#cell-${i}-${j}`);
+            cell.innerText = grid[i][j];
+            cell = document.querySelector(`#cell-${k}-${j}`);
+            cell.innerText = grid[k][j];
+            break;
+          } 
+          // The cell is empty
+          else {
+            continue;
+          }
+        }
+      } 
+      // The cell is not empty, so continue
+      else {
+        continue
+      }
+    }
+  }
+}
+
+// Function for DOWN movement
 const moveDown = () => {
   let tempGrid = JSON.parse(JSON.stringify(grid))
-  console.log("tempGrid >>", tempGrid)
   
   // #1 - Move the squares down
   moveDownClearSpaces();
@@ -146,7 +194,6 @@ const moveDown = () => {
   moveDownClearSpaces();
 
   // #4 - Add a new square only if the grid has changed
-  console.log("check >>", compareArrays(grid, tempGrid))
   if (compareArrays(grid, tempGrid)) {
     console.log("Down movement not possible")
     messageDisplay.innerText = "Down movement not possible"
@@ -155,6 +202,44 @@ const moveDown = () => {
     messageDisplay.innerText = ""
   }
 }
+
+// Function for UP movement
+const moveUp = () => {
+  let tempGrid = JSON.parse(JSON.stringify(grid))
+
+  // #1 - Move the squares up
+  moveUpClearSpaces()
+
+  // #2 - Merge the squares
+  for (let j = 0; j < 4; j++) {
+    for (let i = 0; i < 3; i++) {
+      if (grid[i][j] === grid[i+1][j] && grid[i][j] !== "") {
+        grid[i][j] = grid[i][j] * 2;
+        grid[i+1][j] = "";
+        // Update the screen
+        cell = document.querySelector(`#cell-${i}-${j}`);
+        cell.innerText = grid[i][j];
+        cell = document.querySelector(`#cell-${i+1}-${j}`);
+        cell.innerText = "";
+        // Update the score
+        updateScore(grid[i][j]);
+      }
+    }
+  }
+
+  // #3 - Move the squares up
+  moveUpClearSpaces()
+
+  // #4 - Add a new square only if the grid has changed
+  if (compareArrays(grid, tempGrid)) {
+    console.log("Up movement not possible")
+    messageDisplay.innerText = "Up movement not possible"
+  } else {
+    addSquare()
+    messageDisplay.innerText = ""
+  }
+}
+
 
 newGame.addEventListener('click', () => {
   console.log("-----------------------")
@@ -167,6 +252,7 @@ newGame.addEventListener('click', () => {
   console.log("Grid >>", grid)
 });
 
+// ------------------- MOVE DOWN -------------------
 // Move Down when the down button is clicked
 btnDown.addEventListener('click', () => {
   moveDown();
@@ -175,5 +261,17 @@ btnDown.addEventListener('click', () => {
 document.addEventListener('keydown', (event) => {
   if (event.key === "ArrowDown") {
     moveDown();
+  }
+})
+
+// ------------------- MOVE UP -------------------
+// Move Up when the up button is clicked
+btnUp.addEventListener('click', () => {
+  moveUp();
+})
+// Move Up when the up arrow key is pressed
+document.addEventListener('keydown', (event) => {
+  if (event.key === "ArrowUp") {
+    moveUp();
   }
 })
