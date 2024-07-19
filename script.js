@@ -7,6 +7,8 @@ const btnLeft = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 
 let score = 0
+let victory = false
+const nbForVictory = 2048
 let grid = [["","","",""],["","","",""],["","","",""],["","","",""]]
 
 // Function to return a random number between 0 and 3
@@ -32,6 +34,11 @@ const addSquare = () => {
 // Function to check if the grid is full
 const isGridFull = (grid) => {
   return grid.every(row => row.every(cell => cell !== ""));
+}
+
+// Function to check if the grid contains the value 2048
+const isVictory = (grid) => {
+  return grid.some(row => row.includes(nbForVictory));
 }
 
 // Function to reset the grid and the screen
@@ -80,9 +87,14 @@ const compareArrays = (array1, array2, direction) => {
       messageDisplay.innerHTML = `${direction} movement not possible`
     }
   } else {
-    addSquare()
-    updateCellStyles();
-    messageDisplay.innerHTML = ""
+    if (isVictory(array1)) {
+      messageDisplay.innerHTML = "<strong>Congratulations! You won!</strong>"
+      victory = true;
+    } else {
+      addSquare()
+      updateCellStyles();
+      messageDisplay.innerHTML = ""
+    }
   }
 }
 
@@ -99,7 +111,6 @@ const updateCellStyles = () => {
     }
   }
 }
-
 
 // Function to move the squares down to clear the spaces
 const moveDownClearSpaces = () => {
@@ -263,6 +274,7 @@ const moveLeftClearSpaces = () => {
 
 // Function for DOWN movement
 const moveDown = () => {
+  if (victory) { return }
   let tempGrid = JSON.parse(JSON.stringify(grid))
   
   // #1 - Move the squares down
@@ -294,6 +306,7 @@ const moveDown = () => {
 
 // Function for UP movement
 const moveUp = () => {
+  if (victory) { return }
   let tempGrid = JSON.parse(JSON.stringify(grid))
 
   // #1 - Move the squares up
@@ -325,6 +338,7 @@ const moveUp = () => {
 
 // Function for RIGHT movement
 const moveRight = () => {
+  if (victory) { return }
   let tempGrid = JSON.parse(JSON.stringify(grid))
 
   // #1 - Move the squares right
@@ -356,6 +370,7 @@ const moveRight = () => {
 
 // Function for LEFT movement
 const moveLeft = () => {
+  if (victory) { return }
   let tempGrid = JSON.parse(JSON.stringify(grid))
 
   // #1 - Move the squares left

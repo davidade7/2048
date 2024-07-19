@@ -130,7 +130,7 @@ button:hover {
 }
 
 /* For smaller screen (smartphone) */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 500px) {
   #app {
     width: 100vw;
     height: 100vh;
