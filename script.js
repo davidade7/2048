@@ -1,5 +1,4 @@
 const newGame = document.querySelector('#new-game');
-const game = document.querySelector('#game');
 const scoreDisplay = document.querySelector('#score-number');
 const messageDisplay = document.querySelector('#message-display');
 const btnUp = document.querySelector('#up');
@@ -10,12 +9,9 @@ const btnRight = document.querySelector('#right');
 let score = 0
 let grid = [["","","",""],["","","",""],["","","",""],["","","",""]]
 
-
 // Function to return a random number between 0 and 3
 const randomNum = () => {
-  const number = Math.floor(Math.random() * 4);
-  // console.log("Random Number >>", number);
-  return number
+  return number = Math.floor(Math.random() * 4);
 }
 
 // Function to add a square to the grid
@@ -61,15 +57,25 @@ const updateScore = (scoreToAdd) => {
 }
 
 // Function to compare two 2D arrays
-const compareArrays = (array1, array2) => {
+const compareArrays = (array1, array2, direction) => {
+  let sameArray = true;
   for (let i = 0; i < array1.length; i++) {
     for (let j = 0; j < array1[i].length; j++) {
       if (array1[i][j] !== array2[i][j]) {
-        return false;
+        sameArray = false;
       }
     }
   }
-  return true
+
+  // Check if the arrays are the same
+  if (sameArray) {
+    console.log(`${direction} movement not possible`)
+    messageDisplay.innerText = `${direction} movement not possible`
+  } else {
+    addSquare()
+    updateCellStyles();
+    messageDisplay.innerText = ""
+  }
 }
 
 // Update style of the squares
@@ -89,19 +95,14 @@ const updateCellStyles = () => {
 
 // Function to move the squares down to clear the spaces
 const moveDownClearSpaces = () => {
-  console.log("Move Down")
   for (let j = 0 ; j < 4; j++) {
     // Check if the column is empty
     let empty = true;
     for (let i = 0; i < 4; i++) {
-      if (grid[i][j] !== "") {
-        empty = false;
-      }
+      if (grid[i][j] !== "") { empty = false }
     }
     // Switch to the next column if the current one is empty
-    if (empty) {
-      continue;
-    }
+    if (empty) { continue }
     
     // Begin the movement
     for (let i = 3; i > 0; i--) {
@@ -122,15 +123,11 @@ const moveDownClearSpaces = () => {
             break;
           } 
           // The cell is empty
-          else {
-            continue;
-          }
+          else { continue }
         }
       } 
       // The cell is not empty, so continue
-      else {
-        continue
-      }
+      else { continue }
     }
   }
   updateCellStyles();
@@ -138,19 +135,14 @@ const moveDownClearSpaces = () => {
 
 // Function to move the squares up to clear the spaces
 const moveUpClearSpaces = () => {
-  console.log("Move Up")
   for (let j = 0 ; j < 4; j++) {
     // Check if the column is empty
     let empty = true;
     for (let i = 0; i < 4; i++) {
-      if (grid[i][j] !== "") {
-        empty = false;
-      }
+      if (grid[i][j] !== "") { empty = false }
     }
     // Switch to the next column if the current one is empty
-    if (empty) {
-      continue;
-    }
+    if (empty) { continue }
     
     // Begin the movement
     for (let i = 0; i < 4; i++) {
@@ -171,15 +163,11 @@ const moveUpClearSpaces = () => {
             break;
           } 
           // The cell is empty
-          else {
-            continue;
-          }
+          else { continue }
         }
       } 
       // The cell is not empty, so continue
-      else {
-        continue
-      }
+      else { continue }
     }
   }
   updateCellStyles();
@@ -187,19 +175,14 @@ const moveUpClearSpaces = () => {
 
 // Function to move the squares right to clear the spaces
 const moveRightClearSpaces = () => {
-  console.log("Move Right")
   for (let i = 0 ; i < 4; i++) {
     // Check if the row is empty
     let empty = true;
     for (let j = 0; j < 4; j++) {
-      if (grid[i][j] !== "") {
-        empty = false;
-      }
+      if (grid[i][j] !== "") { empty = false }
     }
     // Switch to the next column if the current one is empty
-    if (empty) {
-      continue;
-    }
+    if (empty) { continue }
     
     // Begin the movement
     for (let j = 3; j >= 0; j--) {
@@ -220,15 +203,11 @@ const moveRightClearSpaces = () => {
             break;
           } 
           // The cell is empty
-          else {
-            continue;
-          }
+          else { continue }
         }
       } 
       // The cell is not empty, so continue
-      else {
-        continue
-      }
+      else { continue }
     }
   }
   updateCellStyles();
@@ -236,19 +215,14 @@ const moveRightClearSpaces = () => {
 
 // Function to move the squares left to clear the spaces
 const moveLeftClearSpaces = () => {
-  console.log("Move Left")
   for (let i = 0 ; i < 4; i++) {
     // Check if the row is empty
     let empty = true;
     for (let j = 0; j < 4; j++) {
-      if (grid[i][j] !== "") {
-        empty = false;
-      }
+      if (grid[i][j] !== "") { empty = false }
     }
     // Switch to the next column if the current one is empty
-    if (empty) {
-      continue;
-    }
+    if (empty) { continue }
     
     // Begin the movement
     for (let j = 0; j <= 4; j++) {
@@ -269,15 +243,11 @@ const moveLeftClearSpaces = () => {
             break;
           } 
           // The cell is empty
-          else {
-            continue;
-          }
+          else { continue }
         }
       } 
       // The cell is not empty, so continue
-      else {
-        continue
-      }
+      else { continue }
     }
   }
   updateCellStyles();
@@ -311,14 +281,7 @@ const moveDown = () => {
   moveDownClearSpaces();
 
   // #4 - Add a new square only if the grid has changed
-  if (compareArrays(grid, tempGrid)) {
-    console.log("Down movement not possible")
-    messageDisplay.innerText = "Down movement not possible"
-  } else {
-    addSquare()
-    updateCellStyles();
-    messageDisplay.innerText = ""
-  }
+  compareArrays(grid, tempGrid, 'Down');
 }
 
 // Function for UP movement
@@ -349,14 +312,7 @@ const moveUp = () => {
   moveUpClearSpaces()
 
   // #4 - Add a new square only if the grid has changed
-  if (compareArrays(grid, tempGrid)) {
-    console.log("Up movement not possible")
-    messageDisplay.innerText = "Up movement not possible"
-  } else {
-    addSquare()
-    updateCellStyles();
-    messageDisplay.innerText = ""
-  }
+  compareArrays(grid, tempGrid, 'Up');
 }
 
 // Function for RIGHT movement
@@ -387,14 +343,7 @@ const moveRight = () => {
   moveRightClearSpaces()
 
   // #4 - Add a new square only if the grid has changed
-  if (compareArrays(grid, tempGrid)) {
-    console.log("Right movement not possible")
-    messageDisplay.innerText = "Right movement not possible"
-  } else {
-    addSquare()
-    updateCellStyles();
-    messageDisplay.innerText = ""
-  }
+  compareArrays(grid, tempGrid, 'Right');
 }
 
 // Function for LEFT movement
@@ -425,14 +374,7 @@ const moveLeft = () => {
   moveLeftClearSpaces()
 
   // #4 - Add a new square only if the grid has changed
-  if (compareArrays(grid, tempGrid)) {
-    console.log("Left movement not possible")
-    messageDisplay.innerText = "Left movement not possible"
-  } else {
-    addSquare()
-    updateCellStyles();
-    messageDisplay.innerText = ""
-  }
+  compareArrays(grid, tempGrid, 'Left');
 }
 
 
@@ -446,7 +388,6 @@ newGame.addEventListener('click', () => {
   // Add first square
   addSquare();
   updateCellStyles();
-  console.log("Grid >>", grid)
 });
 
 // ------------------- MOVE DOWN -------------------
@@ -454,23 +395,11 @@ newGame.addEventListener('click', () => {
 btnDown.addEventListener('click', () => {
   moveDown();
 })
-// Move Down when the down arrow key is pressed
-document.addEventListener('keydown', (event) => {
-  if (event.key === "ArrowDown") {
-    moveDown();
-  }
-})
 
 // ------------------- MOVE UP -------------------
 // Move Up when the up button is clicked
 btnUp.addEventListener('click', () => {
   moveUp();
-})
-// Move Up when the up arrow key is pressed
-document.addEventListener('keydown', (event) => {
-  if (event.key === "ArrowUp") {
-    moveUp();
-  }
 })
 
 // ------------------- MOVE RIGHT -------------------
@@ -478,21 +407,22 @@ document.addEventListener('keydown', (event) => {
 btnRight.addEventListener('click', () => {
   moveRight();
 })
-// Move Right when the right arrow key is pressed
-document.addEventListener('keydown', (event) => {
-  if (event.key === "ArrowRight") {
-    moveRight();
-  }
-})
 
 // ------------------- MOVE LEFT -------------------
 // Move Left when the left button is clicked
 btnLeft.addEventListener('click', () => {
   moveLeft();
 })
-// Move Left when the left arrow key is pressed
+
+// Pressed key
 document.addEventListener('keydown', (event) => {
   if (event.key === "ArrowLeft") {
     moveLeft();
+  } else if (event.key === "ArrowDown") {
+    moveDown();
+  } else if (event.key === "ArrowUp") {
+    moveUp();
+  } else if (event.key === "ArrowRight") {
+    moveRight();
   }
 })
