@@ -16,6 +16,12 @@ const randomNum = () => {
 
 // Function to add a square to the grid
 const addSquare = () => {
+  // Check if the grid is full
+  if (grid.every(row => row.every(cell => cell !== ""))) {
+    messageDisplay.innerText = "Game Over"
+    return
+  }
+  
   let row = randomNum();
   let col = randomNum();
 
@@ -27,6 +33,11 @@ const addSquare = () => {
   cell.innerText = 2;
 
   grid[row][col] = 2;
+}
+
+// Function to check if the grid is full
+const isGridFull = (grid) => {
+  return grid.every(row => row.every(cell => cell !== ""));
 }
 
 // Function to reset the grid and the screen
@@ -69,8 +80,11 @@ const compareArrays = (array1, array2, direction) => {
 
   // Check if the arrays are the same
   if (sameArray) {
-    console.log(`${direction} movement not possible`)
-    messageDisplay.innerText = `${direction} movement not possible`
+    if (isGridFull(array1)) {
+      messageDisplay.innerText = "No more movement possible.<br>Game Over!"
+    } else { 
+      messageDisplay.innerText = `${direction} movement not possible`
+    }
   } else {
     addSquare()
     updateCellStyles();
