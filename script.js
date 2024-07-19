@@ -16,12 +16,6 @@ const randomNum = () => {
 
 // Function to add a square to the grid
 const addSquare = () => {
-  // Check if the grid is full
-  if (grid.every(row => row.every(cell => cell !== ""))) {
-    messageDisplay.innerText = "Game Over"
-    return
-  }
-  
   let row = randomNum();
   let col = randomNum();
 
@@ -58,7 +52,7 @@ const resetGrid = () => {
   scoreDisplay.innerText = score;
 
   // Reset the message
-  messageDisplay.innerText = "";
+  messageDisplay.innerHTML = "";
 }
 
 // Function to update the score
@@ -81,14 +75,14 @@ const compareArrays = (array1, array2, direction) => {
   // Check if the arrays are the same
   if (sameArray) {
     if (isGridFull(array1)) {
-      messageDisplay.innerText = "No more movement possible.<br>Game Over!"
+      messageDisplay.innerHTML = "No more movement possible.<br><strong>Game Over!</strong>"
     } else { 
-      messageDisplay.innerText = `${direction} movement not possible`
+      messageDisplay.innerHTML = `${direction} movement not possible`
     }
   } else {
     addSquare()
     updateCellStyles();
-    messageDisplay.innerText = ""
+    messageDisplay.innerHTML = ""
   }
 }
 
